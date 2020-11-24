@@ -1,0 +1,13 @@
+{
+  "name": "action-release-to-github",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:blocklet/action-release-to-github.git",
+  "author": "Arcblock",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "shelljs": "^0.8.4"
+  }
+}
