@@ -13119,7 +13119,7 @@ const core = __nccwpck_require__(9699);
 
 const run = async () => {
   const skip = core.getInput('skip');
-  if (skip) {
+  if (skip === 'true') {
     console.log('Skip release to github action');
     return;
   }
