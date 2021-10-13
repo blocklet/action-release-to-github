@@ -5,6 +5,11 @@ const github = require('@actions/github');
 const core = require('@actions/core');
 
 const run = async () => {
+  const skip = core.getInput('skip');
+  if (skip) {
+    console.log('Skip release to github action');
+    return;
+  }
   const githubToken = core.getInput('token', { required: true });
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
 

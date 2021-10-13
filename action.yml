@@ -5,6 +5,9 @@ inputs:
     description: 'token'
     required: true
     default: ${{ github.token }}
+  skip:
+    description: 'Skip action'
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
