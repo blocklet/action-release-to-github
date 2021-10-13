@@ -13118,6 +13118,11 @@ const github = __nccwpck_require__(7806);
 const core = __nccwpck_require__(9699);
 
 const run = async () => {
+  const skip = core.getInput('skip');
+  if (skip) {
+    console.log('Skip release to github action');
+    return;
+  }
   const githubToken = core.getInput('token', { required: true });
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
 
