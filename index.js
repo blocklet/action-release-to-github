@@ -18,13 +18,11 @@ const run = async () => {
   }
   const { version } = JSON.parse(fs.readFileSync(file, 'utf-8'));
 
-  shell.exec(`git tag -a v${version} -m "[skip ci] Realease v${version}"`);
-  shell.exec(`git push origin v${version}`);
-
   // upload assets to github release
   console.log(`Create release: ${owner}, repo: ${repo}, tag: v${version}`);
   const octokit = github.getOctokit(githubToken);
   const release = await octokit.repos.createRelease({
+    name: `v${version}`,
     owner,
     repo,
     tag_name: `v${version}`,
