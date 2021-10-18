@@ -13117,23 +13117,32 @@ const fs = __nccwpck_require__(5747);
 const github = __nccwpck_require__(7806);
 const core = __nccwpck_require__(9699);
 
+const skip = core.getInput('skip');
+if (skip === 'true') {
+  console.log('Skip release to github action');
+  return;
+}
+
 const run = async () => {
-  const skip = core.getInput('skip');
-  if (skip === 'true') {
-    console.log('Skip release to github action');
-    return;
-  }
+  const filePath = core.getInput('file-path');
+  const workingDirectory = core.getInput('workgin-directory');
   const githubToken = core.getInput('token', { required: true });
+
+  const cdRes = shell.cd(workingDirectory);
+  if (cdRes.code !== 0) {
+    throw new Error(`Failed to change directory to ${workingDirectory}`);
+  }
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
 
   shell.exec('git config --local user.name "ArcBlock Robot"');
   shell.exec('git config --local user.email "bot@arcblock.io"');
 
   // get blocklet version
-  const file = path.join(process.cwd(), '.blocklet/release/blocklet.json');
+  const file = path.join(process.cwd(), filePath);
   if (!fs.existsSync(file)) {
-    throw new Error('Missing file at .blocklet/release/blocklet.json');
+    throw new Error(`Missing file at ${filePath}`);
   }
+  const folderPath = path.dirname(file);
   const { version } = JSON.parse(fs.readFileSync(file, 'utf-8'));
 
   // upload assets to github release
@@ -13148,12 +13157,12 @@ const run = async () => {
 
   console.log(`Start upload assets to release. id: ${release.data.id}, upload_url: ${release.data.upload_url}`);
 
-  const files = fs.readdirSync('.blocklet/release');
+  const files = fs.readdirSync(folderPath);
 
   try {
     for (let i = 0; i < files.length; i++) {
       const f = files[i];
-      const file = `.blocklet/release/${f}`;
+      const file = `${folderPath}/${f}`;
       const stat = fs.statSync(file);
       const file_size = stat.size;
       const file_bytes = fs.readFileSync(file);
