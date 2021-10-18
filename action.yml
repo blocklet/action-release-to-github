@@ -9,7 +9,7 @@ inputs:
     description: 'blocklet.json path'
     default: .blocklet/release/blocklet.json
     required: false
-  workgin-directory:
+  working-directory:
     description: 'Working directory'
     default: ./
     required: false

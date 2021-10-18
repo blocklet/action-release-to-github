@@ -12,7 +12,7 @@ if (skip === 'true') {
 
 const run = async () => {
   const filePath = core.getInput('file-path');
-  const workingDirectory = core.getInput('workgin-directory');
+  const workingDirectory = core.getInput('working-directory');
   const githubToken = core.getInput('token', { required: true });
 
   const cdRes = shell.cd(workingDirectory);
