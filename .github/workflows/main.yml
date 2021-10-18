@@ -1,4 +1,6 @@
 name: Github release
+env:
+  MAIN_VERSION: 1
 
 on:
   push:
@@ -15,18 +17,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        uses: bahmutov/npm-install@v1
-
-      - name: Install ncc
-        run: yarn global add @vercel/ncc
-
-      - name: Build
-        run: yarn build
-
       - name: Get npm version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Set yarn cache
+        uses: c-hive/gha-yarn-cache@v2
+
+      - name: Install dependencies
+        run: |
+          yarn
+          yarn global add @vercel/ncc
+
+      - name: Build
+        run: yarn build
 
       - name: Publish dist
         run: |
@@ -34,5 +38,15 @@ jobs:
           git config --local user.email "bot@arcblock.io"
           git add dist
           git commit --allow-empty -m "Github action build"
-          git tag -a v${{ steps.package-version.outputs.current-version}} -m "Release ${{ steps.package-version.outputs.current-version}}"
-          git push --follow-tags
+          git push origin main
+
+      - name: Realese
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ steps.package-version.outputs.current-version}}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Reset v${{ env.MAIN_VERSION }}
+        run: |
+          git tag -a v${{ env.MAIN_VERSION }} -m 'Sync with v${{ steps.package-version.outputs.current-version}}'
+          git push origin v${{ env.MAIN_VERSION }} --force
