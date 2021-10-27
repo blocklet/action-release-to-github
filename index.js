@@ -14,6 +14,7 @@ const run = async () => {
   const filePath = core.getInput('file-path');
   const workingDirectory = core.getInput('working-directory');
   const githubToken = core.getInput('token', { required: true });
+  const skipReadme = core.getInput('skip-readme');
 
   const cdRes = shell.cd(workingDirectory);
   if (cdRes.code !== 0) {
@@ -75,6 +76,11 @@ const run = async () => {
       release_id: release.data.id,
     });
     throw err;
+  }
+
+  if (skipReadme === 'true') {
+    console.log('Skip update readme');
+    return;
   }
 
   // update readme

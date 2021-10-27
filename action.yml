@@ -16,6 +16,9 @@ inputs:
   skip:
     description: 'Skip action'
     default: false
+  skip-readme:
+    description: 'Skip update readme'
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
