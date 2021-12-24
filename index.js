@@ -89,9 +89,9 @@ const run = async () => {
   const link = `https://install.arcblock.io/?action=blocklet-install&meta_url=https%3A%2F%2Fgithub.com%2F${owner}%2F${repo}%2Freleases%2Fdownload%2Fv${version}%2Fblocklet.json`;
   const regex = /download%2Fv(\d+\.\d+\.\d+)%2Fblocklet\.json/;
   let newReadme;
-  const paragraph = `## Install on my ABT Node
+  const paragraph = `## Launch on Blocklet Server
 
-[![Install on my ABT Node](https://raw.githubusercontent.com/blocklet/development-guide/main/assets/install_on_abtnode.svg)](${link})
+[![Launch on Blocklet Server](https://assets.arcblock.io/icons/launch_on_blocklet_server.svg)](${link})
 
 `;
   if (!regex.test(readme)) {
