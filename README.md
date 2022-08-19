@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: <build_your_blocklet> # after build, use `abtnode bundle --create-release` to bundle your blocklet
       - name: Release to Github
-        uses: blocklet/action-release-to-github@v1.0.0
+        uses: blocklet/action-release-to-github@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```

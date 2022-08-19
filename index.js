@@ -86,7 +86,7 @@ const run = async () => {
   // update readme
   console.log('Update README.md...');
   const readme = fs.readFileSync('./README.md').toString();
-  const link = `https://install.arcblock.io/?action=blocklet-install&meta_url=https%3A%2F%2Fgithub.com%2F${owner}%2F${repo}%2Freleases%2Fdownload%2Fv${version}%2Fblocklet.json`;
+  const link = `https://install.arcblock.io/launch?action=blocklet-install&meta_url=https%3A%2F%2Fgithub.com%2F${owner}%2F${repo}%2Freleases%2Fdownload%2Fv${version}%2Fblocklet.json`;
   const regex = /download%2Fv(\d+\.\d+\.\d+)%2Fblocklet\.json/;
   let newReadme;
   const paragraph = `## Launch on Blocklet Server
